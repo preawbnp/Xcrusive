@@ -35,13 +35,13 @@ export default class Table extends React.Component {
 					</tbody>
 				</table>
 			</div>
-		)	
+		)
 
 	}
 	setIconHeader(ASC) {
-		if(ASC === true)
+		if(ASC === false)
 			return <p inline>&uarr;</p>
-		else if (ASC === false)
+		else if (ASC === true)
 			return <p inline>&darr;</p>
 		else
 			return ''
@@ -52,7 +52,7 @@ export default class Table extends React.Component {
 		let result = data.sort((obj1, obj2) => {
 			var a = obj1.get(keys[index].type)
 			var b = obj2.get(keys[index].type)
-			if(!keys[index].ASC) 
+			if(!keys[index].ASC)
 				return a - b
 			else
 				return b - a

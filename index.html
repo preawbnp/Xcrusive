@@ -179,7 +179,7 @@
        var distance = [];
        var conflagration = [];
        var oldHistory = '';
-       var smoothie = new SmoothieChart({maxValue:300,minValue:0}),
+       var smoothie = new SmoothieChart({maxValue:150,minValue:0}),
        canvas = document.getElementById('smoothie-chart'),
        series = new TimeSeries();
        smoothie.addTimeSeries(series, {lineWidth:2,strokeStyle:'#00ff00'});
@@ -192,12 +192,9 @@
        var line3 = new TimeSeries();
        // Add a random value to each line every second
        setInterval(function() {
-       console.log(degreeX);
-       console.log(degreeY);
-       console.log(conflagration);
        line1.append(new Date().getTime(), averageForChart(degreeX,degreeY,conflagration));
-       line2.append(new Date().getTime(), Math.random()*250);
-       line3.append(new Date().getTime(), Math.random()*200);
+       line2.append(new Date().getTime(), Math.random()*130);
+       line3.append(new Date().getTime(), Math.random()*120);
     }, 1000);
 
        // Add to SmoothieChart
@@ -238,7 +235,7 @@
                 conflagration.push(dataArray[5]);
                 tempInterface(dataArray[3]);
                 history("ship1",dataArray,conflagrationLevel(dataArray[5]));
-                shipBigImg.rotate(parseFloat(dataArray[0]));
+                shipBigImg.rotate(parseFloat(-dataArray[0]));
                 shipImg.rotate(parseFloat(dataArray[1]));
              }
           });
@@ -335,36 +332,38 @@
           else if (temperature > 50)
              color = "red";
           tempMor.removeClass().addClass("c100 p"+temperature+" "+color);
-          circleSpan.html(temperature+" °C");
+          circleSpan.html(temperature+"°C");
        }
 
        function dataBase() {
-          var averageDegreeX = '';
-          var averageDegreeY = '';
-          var averageTemp= '';
-          var averageDistance = '';
-          var averageConflagration = '';
-          console.log(degreeX);
+          var averageDegreeX = 0;
+          var averageDegreeY = 0;
+          var averageTemp= 0;
+          var averageDistance = 0;
+          var averageConflagration = 0;
           for (var i = 0; i < degreeY.length;i++) {
-             averageDegreeX += degreeX[i];
-             averageDegreeY += degreeY[i];
-             averageTemp += temp[i];
-             averageDistance += distance[i];
-             averageConflagration += conflagration[i];
+             averageDegreeX += parseFloat(degreeX[i]);
+             averageDegreeY += parseFloat(degreeY[i]);
+             averageTemp += parseFloat(temp[i]);
+             if(distance[i] != -1)
+               averageDistance += parseFloat(distance[i]);
+             averageConflagration += parseFloat(conflagration[i]);
           }
           averageDegreeX/=degreeX.length;
           averageDegreeY/=degreeY.length;
           averageTemp/=temp.length;
           averageDistance/=distance.length;
           averageConflagration/=conflagration.length;
-          console.log(averageDegreeX);
+          var random = Math.round(Math.random()*2);
+          console.log(random);
           var Ship = Parse.Object.extend("Ship");
           var ship = new Ship();
-          ship.set("x", averageDegreeX);
-          ship.set("y", averageDegreeY);
-          ship.set("distance", averageDistance);
-          ship.set("conflagration", averageConflagration);
-          ship.set("temp", averageTemp);
+          ship.set("x", Math.round(averageDegreeX));
+          ship.set("y", Math.round(averageDegreeY));
+          ship.set("distance", Math.round(averageDistance));
+          ship.set("conflagration", Math.round(averageConflagration));
+          ship.set("temp", Math.round(averageTemp));
+          ship.set("safety",random);
           ship.save(null, {
              success: function(object) {
                 alert("success");
@@ -402,11 +401,8 @@
           a /= x.length;
           b /=y.length;
           c /=conflag.length;
-
           return a+b+c;
        }
   </script>
 </body>
-
-
 </html>

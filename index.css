@@ -170,9 +170,10 @@ body {
 
 #alert-button {
   border: 0px;
-  height: 30px;
-  margin-left: -20px;
-  margin-top: -310px;
+  height: 40px;
+  width: 60px;
+  margin-left: -30px;
+  margin-top: -320px;
   position: absolute;
   background-color: #dbdfdd;
 }
@@ -184,8 +185,9 @@ body {
 
 #save-data {
   border: 0px;
-  height: 30px;
-  margin-left: -20px;
+  height: 40px;
+  width: 60px;
+  margin-left: -30px;
   margin-top: -290px;
   position: absolute;
   background-color: #dbdfdd;

@@ -11,7 +11,7 @@ export default class Row extends React.Component {
 			backgroundColor:'#fbe105',
 			color: "#fbe105",
 			fontSize: "1%",
-			marginLeft: "30px"
+			marginLeft: "15px"
 		}
 		if(safety === 0) {
 			style['backgroundColor'] = '#e74c3c'
@@ -22,14 +22,14 @@ export default class Row extends React.Component {
 		else {
 			style['backgroundColor'] = '#1abc9c'
 		}
-		
+
 		return(
 			<tr>
-				<td>{ data.get('x') }</td>
-				<td>{ data.get('y') }</td>
+				<td>{ data.get('x') + " °" }</td>
+				<td>{ data.get('y') + " °" }</td>
 				<td>{ data.get('conflagration') }</td>
-				<td>{ data.get('temp') }</td>
-				<td>{ data.get('distance') }</td>
+				<td>{ data.get('temp') + " °C" }</td>
+				<td>{ data.get('distance') != -1 ? data.get('distance') + " m" : "out of length" }</td>
 				<td>{ date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear() }</td>
 				<td><div style={style}>s</div></td>
 			</tr>
